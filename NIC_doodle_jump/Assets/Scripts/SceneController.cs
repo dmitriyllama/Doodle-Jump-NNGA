@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class SceneController : MonoBehaviour
 {
-
+    [SerializeField] private List<Individual> _individuals;
     [SerializeField] private GameObject _regular_platform;
     [SerializeField] private GameObject _extrabounce_platform;
     [SerializeField] [Range(0, 10)] private float _number_of_platforms;
@@ -97,6 +97,10 @@ public class SceneController : MonoBehaviour
 
     public void Reset()
     {
+        foreach (var individual in _individuals)
+        {
+            individual.resetScore();
+        }
         DestroyAllPlatforms();
         CreateInitialPlatforms();
     }

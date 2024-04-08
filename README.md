@@ -35,7 +35,7 @@ The user may watch in-game AI train, which is done using a genetic algorithm (ne
 
 ## Build & implementation info
 
-The game is built in Unity 2022.3. The project can be imported in Unity Hub from the [doodle-jump-src](doodle-jump-src) directory.
+The game is built in Unity 2022.3. The project can be imported in Unity Hub from the [source/doodle-jump-nnga](source/doodle-jump-nnga) directory.
 
 There are currently no complete builds, but you can check on overall progress for requirements below:
 - ✅ Game logic (game system, controls)

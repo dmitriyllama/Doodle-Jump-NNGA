@@ -5,6 +5,7 @@ This is the source code for a Doodle Jump-like game project in Unity. The game i
 
 This project is part to the Nature Inspired Computing course at Innopolis University, Spring 2024.
 
+
 ## AI logic & training
 
 #### Neural Network
@@ -30,6 +31,7 @@ The user may watch in-game AI train, which is done using a genetic algorithm (ne
   10. Perform mutation by writing random values to a random 30% of parameters;
   ```
 11. Repeat from step 2
+
 
 ## Build & implementation info
 

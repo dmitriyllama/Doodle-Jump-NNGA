@@ -1,2 +1,6 @@
-# Doodle-Jump-NNGA
-Doodle Jump-like prototype game, with AI controls developed with NNGA (Neural Network and Genetic Algorithm). For S24 NIC course, Innopolis University
+# Doodle Jump with AI training
+
+## About
+This is the source code for a Doodle Jump-like game project in Unity. The game includes options for training the in-game AI, which uses a Neural Network selected by Genetic Algorithm operations.
+
+This project is part to the Nature Inspired Computing course at Innopolis University, Spring 2024.

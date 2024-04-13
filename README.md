@@ -20,7 +20,7 @@ The user may watch in-game AI train, which is done using a genetic algorithm (ne
 
 1. A population of AI players (pre-determined amount of individuals) is assigned to neural networks with random parameters
 2. Each individual attempts to play a randomly generated game, and the algorithm waits until all individuals have failed or reached a pre-determined threshold
-3. Each individual's final score is recorded as the fitness metric
+3. Each individual's fitness metric is recorded from `height + height/time` at the final point
 4. The population is updated:
   ```
   5. Sort the current population by fitness, from highest to lowest;

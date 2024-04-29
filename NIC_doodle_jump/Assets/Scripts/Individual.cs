@@ -44,8 +44,8 @@ public class Individual : MonoBehaviour
         {
             _score = transform.position.y;
         }
-        _text_score.text = "score: " + String.Format("{0:N2}", _score);
-        _text_time.text = "time: " + String.Format("{0:N2}", _time);
-        _text_ratio.text = "score per time: " + String.Format("{0:N2}", (_score / _time));
+        //_text_score.text = "score: " + String.Format("{0:N2}", _score);
+        //_text_time.text = "time: " + String.Format("{0:N2}", _time);
+        //_text_ratio.text = "score per time: " + String.Format("{0:N2}", (_score / _time));
     }
 }

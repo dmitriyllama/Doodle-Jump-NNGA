@@ -14,7 +14,7 @@ public class DestroyOnLowPosition : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+ /*   void Update()
     {
         if (transform.position.y < _scene_controller.getLowestPlatformPositionY())
         {
@@ -23,4 +23,5 @@ public class DestroyOnLowPosition : MonoBehaviour
             transform.position = new Vector3(0, 0, 0);
         }
     }
+*/    
 }

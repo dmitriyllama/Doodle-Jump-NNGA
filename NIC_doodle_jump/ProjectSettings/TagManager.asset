@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Platform
+  - Bounce_platform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Individuals
   - Water
   - UI
   - 

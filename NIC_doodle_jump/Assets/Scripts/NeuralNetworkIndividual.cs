@@ -11,6 +11,8 @@ using btl.generic;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
+// https://www.primaryobjects.com/2009/05/06/using-neural-networks-and-genetic-algorithms-in-c-net/
+
 public class NeuralNetworkIndividual : MonoBehaviour
 {
     [SerializeField] public SceneController sceneController;

@@ -80,12 +80,14 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        for (int i = 0; i < NNindividuals.Count; i++)
+        int index = 0;
+        foreach(var individual in NNindividuals)
         {
-            setIndividualData(i);
-            NNindividuals[i].GetComponent<NeuralNetworkIndividual>().decide();
-            old_generation_fitness[NNindividuals[i].name] =
-                NNindividuals[i].GetComponent<NeuralNetworkIndividual>().fitnessFunction();
+            setIndividualData(index);
+            individual.GetComponent<NeuralNetworkIndividual>().decide();
+            old_generation_fitness[individual.name] =
+                individual.GetComponent<NeuralNetworkIndividual>().fitnessFunction();
+            index++;
         }
 
         if (max_y_position > transform.position.y)
@@ -243,7 +245,7 @@ public class SceneController : MonoBehaviour
             }
             else
             {
-                _new_platform.gameObject.transform.localScale = new Vector3(Random.Range(1f, 10f),1, 1);
+                _new_platform.gameObject.transform.localScale = new Vector3(Random.Range(3f, 10f),1, 1);
             }
             platforms.Add(_new_platform);
             
@@ -292,11 +294,11 @@ public class SceneController : MonoBehaviour
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().setNetworkWeights(new_generation_weights_list[i]);
             NNindividuals[i].GetComponent<SpriteRenderer>().color =
                 new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            for (int j = 0; j < 10; j++)
+            /*for (int j = 0; j < 10; j++)
             {
                 Debug.Log(new_generation_weights_list[i][j] + " " + old_generation_weights_list[i][j]);    
             }
-            Debug.Log("_____________________________________");
+            Debug.Log("_____________________________________");*/
             
         }
         
@@ -330,12 +332,11 @@ public class SceneController : MonoBehaviour
 
         for (int i = 0; i < _number_of_nn_individuals; i++)
         {
-            new_generation_weights[old_generation_keys[i]] = old_generation_weights[old_generation_keys[i]];
-        }
-        
-        for (int i = 0; i < _number_of_nn_individuals; i++)
-        {
-            if (i > _number_of_nn_individuals / 2)
+            if (i < _number_of_nn_individuals / 2)
+            {
+                new_generation_weights[old_generation_keys[i]] = old_generation_weights[old_generation_keys[i]];
+            }
+            else if (i < _number_of_nn_individuals / 2 + _number_of_nn_individuals / 4)
             {
                 int first_index = Random.Range(0, _number_of_nn_individuals);
                 int second_index = first_index;
@@ -348,24 +349,21 @@ public class SceneController : MonoBehaviour
                         old_generation_weights[old_generation_keys[first_index]], 
                         old_generation_weights[old_generation_keys[second_index]]);
             }
-        }
-    
-        for (int i = 0; i < _number_of_nn_individuals; i++)
-        {
+            else if (i < _number_of_nn_individuals / 2 + _number_of_nn_individuals / 4 + _number_of_nn_individuals / 8)
+            {
+                for (int j = 0; j < _weights_num; j++)
+                {
+                    new_generation_weights[old_generation_keys[i]][j] = Random.Range(-1f, 1f);
+                }
+            }
             if (Random.Range(0f, 1f) < _mutation_individ_chance)
             {
                 new_generation_weights[old_generation_keys[i]] = mutation(new_generation_weights[old_generation_keys[i]]);
             }
-        }
-        
-        for (int i = 0; i < _number_of_nn_individuals; i++)
-        {
-            if (i > _number_of_nn_individuals / 8)
+            
+            for (int j = 0; j < _weights_num; j++)
             {
-                for (int j = 0; j < _weights_num; j++)
-                {
-                    new_generation_weights[old_generation_keys[i]][j] = Random.Range(-10f, 10f);
-                }
+                new_generation_weights[old_generation_keys[i]][j] = Random.Range(-1f, 1f);
             }
         }
     }
@@ -377,7 +375,7 @@ public class SceneController : MonoBehaviour
         {
             if (Random.Range(0f, 1f) < _mutation_genome_chance)
             {
-                new_weights[i] = Random.Range(-10f, 10f);
+                new_weights[i] = Random.Range(-1f, 1f);
             }
             else
             {

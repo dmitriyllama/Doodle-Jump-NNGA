@@ -19,7 +19,7 @@ public class NeuralNetworkIndividual : MonoBehaviour
 {
     [SerializeField] public SceneController sceneController;
     
-    public static BackpropagationNetwork network;
+    public BackpropagationNetwork network;
     private int _input_layer_size;
     private int _hidden_layer_size_1 = 16;
     private double[] _input_data; //stores information about environment
@@ -99,8 +99,8 @@ public class NeuralNetworkIndividual : MonoBehaviour
         //initially random weights
         for (int i = 0; i < weights_num; i++)
         {
-            weights[i] = Random.Range(-10f, 10f);
-        };
+            weights[i] = Random.Range(-1f, 1f);
+        }
         
         setNetworkWeights(weights);
     }
@@ -126,19 +126,19 @@ public class NeuralNetworkIndividual : MonoBehaviour
     public void decide()
     {
         double[] output = network.Run(_input_data);
-        GetComponent<IndividualMovement>().Move(((float)output[0]-0.5f)*20);
+        this.GetComponent<IndividualMovement>().Move(((float)output[0]-0.5f)*20);
     }
     
-    public void setNetworkWeights(double[] weights)
+    public void setNetworkWeights(double[] new_weights)
     {
         // Setup the network's weights.
         int index = 0;
-
         foreach (BackpropagationConnector connector in network.Connectors)
         {
             foreach (BackpropagationSynapse synapse in connector.Synapses)
             {
-                synapse.Weight = weights[index];
+                synapse.Weight = new_weights[index];
+                weights[index] = new_weights[index];
                 synapse.SourceNeuron.SetBias(0);
                 index++;
             }

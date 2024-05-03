@@ -1647,6 +1647,7 @@ MonoBehaviour:
   _extrabounce_platform_chance: 0.2
   _range_of_platform_spawn: 10
   _number_of_nn_individuals: 100
+  max_stagnation_time: 10
   platforms:
   - {fileID: 657567255}
   - {fileID: 1023771185}

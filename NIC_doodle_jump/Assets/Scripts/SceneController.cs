@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+
 
 public class SceneController : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class SceneController : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float _extrabounce_platform_chance;
     [SerializeField] [Range(0, float.MaxValue)] private float _range_of_platform_spawn;
     [SerializeField] [Range(1, 100)] private int _number_of_nn_individuals;
+    [SerializeField] [Range(0, 100)] private float max_stagnation_time;
+    private float stagnation_time = 0;
+    private double previous_max_fittness = 0;
     
     private float _priviest_highest_platform = 9;
     private float _priviest_lowest_platform = -5f;
@@ -53,6 +58,8 @@ public class SceneController : MonoBehaviour
             NNindividuals[i].name = i.ToString();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size);
+            NNindividuals[i].GetComponent<SpriteRenderer>().color =
+                new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         }
 
         old_generation_weights = new Dictionary<string, double[]>();
@@ -87,10 +94,26 @@ public class SceneController : MonoBehaviour
         }
 
         var fitnesses = new List<double>(old_generation_fitness.Values);
+        if (previous_max_fittness < fitnesses.Max())
+        {
+            stagnation_time = 0;
+            previous_max_fittness = fitnesses.Max();
+        }
 
         _text_best_fittness.text = "Fitness " + fitnesses.Max();
         _text_ramaining_individuals.text = "Individuals left " + NNindividuals.Count;
         _text_generation.text = "Number of generation " + generation;
+
+        stagnation_time += Time.deltaTime;
+        if (stagnation_time > max_stagnation_time)
+        {
+            foreach (var VARIABLE in NNindividuals)
+            {
+                Destroy(VARIABLE);
+            }
+            NNindividuals.Clear();
+            Reset();
+        }
     }
 
     void chooseBestIndivid()
@@ -112,8 +135,8 @@ public class SceneController : MonoBehaviour
         List<double> _input_data = new List<double>();
         
         //individual velocity
-        _input_data.Add(NNindividuals[i].GetComponent<Rigidbody2D>().velocity.y);
-        _input_data.Add(NNindividuals[i].GetComponent<Rigidbody2D>().velocity.x);
+        _input_data.Add(Sigmoid(NNindividuals[i].GetComponent<Rigidbody2D>().velocity.y));
+        _input_data.Add(Sigmoid(NNindividuals[i].GetComponent<Rigidbody2D>().velocity.x));
 
         for (int j = 0; j < _number_of_platforms; j++)
         {
@@ -140,7 +163,7 @@ public class SceneController : MonoBehaviour
         
         for (int j = 0; j < _number_of_platforms; j++)
         {
-            _input_data.Add(NNindividuals[i].transform.localScale.x);
+            _input_data.Add(Sigmoid(NNindividuals[i].transform.localScale.x));
         }
         
         NeuralNetworkIndividual nni = NNindividuals[i].GetComponent<NeuralNetworkIndividual>();
@@ -240,8 +263,9 @@ public class SceneController : MonoBehaviour
 
     public void Reset()
     {
-        
+        stagnation_time = 0;
         Debug.Log("GENERATION " + generation);
+        
         makeNewGeneration();
 
         transform.position = Vector3.zero;
@@ -266,6 +290,8 @@ public class SceneController : MonoBehaviour
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size);
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().setNetworkWeights(new_generation_weights_list[i]);
+            NNindividuals[i].GetComponent<SpriteRenderer>().color =
+                new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             for (int j = 0; j < 10; j++)
             {
                 Debug.Log(new_generation_weights_list[i][j] + " " + old_generation_weights_list[i][j]);    
@@ -293,6 +319,14 @@ public class SceneController : MonoBehaviour
     {
         old_generation_fitness.OrderBy(x => x.Value);
         var old_generation_keys = new List<String>(old_generation_fitness.Keys);
+        
+        using(StreamWriter sr = new StreamWriter("D:\\NIC_DOODLE_GITHUB\\Doodle-Jump-NNGA\\NIC_doodle_jump\\Assets\\NNmodels\\"+ generation + ".txt"))
+        {
+            foreach(var item in old_generation_weights[old_generation_keys[0]])
+            {
+                sr.WriteLine(item);
+            }
+        }
 
         for (int i = 0; i < _number_of_nn_individuals; i++)
         {
@@ -323,6 +357,17 @@ public class SceneController : MonoBehaviour
                 new_generation_weights[old_generation_keys[i]] = mutation(new_generation_weights[old_generation_keys[i]]);
             }
         }
+        
+        for (int i = 0; i < _number_of_nn_individuals; i++)
+        {
+            if (i > _number_of_nn_individuals / 8)
+            {
+                for (int j = 0; j < _weights_num; j++)
+                {
+                    new_generation_weights[old_generation_keys[i]][j] = Random.Range(-10f, 10f);
+                }
+            }
+        }
     }
 
     double[] mutation(double[] old_weights)
@@ -332,7 +377,7 @@ public class SceneController : MonoBehaviour
         {
             if (Random.Range(0f, 1f) < _mutation_genome_chance)
             {
-                new_weights[i] = Random.Range(-1f, 1f);
+                new_weights[i] = Random.Range(-10f, 10f);
             }
             else
             {

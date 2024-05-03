@@ -21,8 +21,8 @@ public class NeuralNetworkIndividual : MonoBehaviour
     
     public static BackpropagationNetwork network;
     private int _input_layer_size;
-    private int _hidden_layer_size_1 = 1024;
-    private double[] _input_data; //stores information about enviroment
+    private int _hidden_layer_size_1 = 16;
+    private double[] _input_data; //stores information about environment
     private double[] weights; //stores model of NN
     private int weights_num; //number of weights
     
@@ -59,11 +59,6 @@ public class NeuralNetworkIndividual : MonoBehaviour
         return weights_num;
     }
     
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-    
     // Update is called once per frame
     void Update()
     {
@@ -73,34 +68,38 @@ public class NeuralNetworkIndividual : MonoBehaviour
             _score = transform.position.y;
         }
 
+        //Automatically updates best score among all individuals
         if (_score > sceneController.max_y_position)
         {
             sceneController.max_y_position = _score;
         }
     }
 
+    //This method initializes Neural Network
     public void set_input_layer_size(int size)
     {
         _input_layer_size = size;
 
+        //environment info provided by scene controller
         _input_data = new double[_input_layer_size];
         
-        LinearLayer inputLayer = new LinearLayer(_input_layer_size);
+        //NN architecture
+        LinearLayer inputLayer = new LinearLayer(_input_layer_size); 
         SigmoidLayer hiddenLayer_1 = new SigmoidLayer(_hidden_layer_size_1);
-//        SigmoidLayer hiddenLayer_2 = new SigmoidLayer(_hidden_layer_size_2);
         SigmoidLayer outputLayer = new SigmoidLayer(1);
-
+        
         BackpropagationConnector connector1 = new BackpropagationConnector(inputLayer, hiddenLayer_1);
-//        BackpropagationConnector connector2 = new BackpropagationConnector(hiddenLayer_1, hiddenLayer_2);
-        BackpropagationConnector connector3 = new BackpropagationConnector(hiddenLayer_1, outputLayer);
+        BackpropagationConnector connector2 = new BackpropagationConnector(hiddenLayer_1, outputLayer);
         network = new BackpropagationNetwork(inputLayer, outputLayer);
         network.Initialize();
 
+        //number of all weights in dense NN
         weights_num = _input_layer_size * _hidden_layer_size_1 + _hidden_layer_size_1 * 1;
         weights = new double[weights_num];
+        //initially random weights
         for (int i = 0; i < weights_num; i++)
         {
-            weights[i] = Random.Range(-1f, 1f);
+            weights[i] = Random.Range(-10f, 10f);
         };
         
         setNetworkWeights(weights);
@@ -127,8 +126,7 @@ public class NeuralNetworkIndividual : MonoBehaviour
     public void decide()
     {
         double[] output = network.Run(_input_data);
-        //Debug.Log(output[0]);
-        GetComponent<IndividualMovement>().Move((float)output[0]*2 - 1);
+        GetComponent<IndividualMovement>().Move(((float)output[0]-0.5f)*20);
     }
     
     public void setNetworkWeights(double[] weights)
@@ -141,7 +139,7 @@ public class NeuralNetworkIndividual : MonoBehaviour
             foreach (BackpropagationSynapse synapse in connector.Synapses)
             {
                 synapse.Weight = weights[index];
-                synapse.SourceNeuron.SetBias(weights[index]);
+                synapse.SourceNeuron.SetBias(0);
                 index++;
             }
         }

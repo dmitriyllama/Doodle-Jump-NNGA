@@ -360,11 +360,6 @@ public class SceneController : MonoBehaviour
             {
                 new_generation_weights[old_generation_keys[i]] = mutation(new_generation_weights[old_generation_keys[i]]);
             }
-            
-            for (int j = 0; j < _weights_num; j++)
-            {
-                new_generation_weights[old_generation_keys[i]][j] = Random.Range(-1f, 1f);
-            }
         }
     }
 

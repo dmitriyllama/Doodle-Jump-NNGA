@@ -943,7 +943,7 @@ GameObject:
   - component: {fileID: 1385160927}
   - component: {fileID: 1385160926}
   m_Layer: 5
-  m_Name: Time
+  m_Name: Alive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,8 +965,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -860, y: 400}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -589, y: 400}
+  m_SizeDelta: {x: 742, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1385160926
 MonoBehaviour:
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 1606307765}
   - component: {fileID: 1606307764}
   m_Layer: 5
-  m_Name: Ratio
+  m_Name: Generation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1099,8 +1099,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -860, y: 300}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -589, y: 300}
+  m_SizeDelta: {x: 742, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1606307764
 MonoBehaviour:
@@ -1211,7 +1211,7 @@ GameObject:
   - component: {fileID: 1754299718}
   - component: {fileID: 1754299717}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Fitness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1233,8 +1233,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -860, y: 515}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -589, y: 515}
+  m_SizeDelta: {x: 742, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1754299717
 MonoBehaviour:
@@ -1646,18 +1646,19 @@ MonoBehaviour:
   _number_of_platforms: 5
   _extrabounce_platform_chance: 0.2
   _range_of_platform_spawn: 10
-  _number_of_nn_individuals: 10
+  _number_of_nn_individuals: 100
   platforms:
   - {fileID: 657567255}
   - {fileID: 1023771185}
   - {fileID: 1861519181}
   - {fileID: 559128154}
   - {fileID: 676171944}
-  _mutation_chance: 0.3
-  _crossover_chance: 0.3
-  _text_best_fittness: {fileID: 0}
-  _text_ramaining_individuals: {fileID: 0}
-  _text_generation: {fileID: 0}
+  _mutation_genome_chance: 0.1
+  _crossover_genome_chance: 0.5
+  _mutation_individ_chance: 0.3
+  _text_best_fittness: {fileID: 1754299717}
+  _text_ramaining_individuals: {fileID: 1385160926}
+  _text_generation: {fileID: 1606307764}
   max_y_position: 0
 --- !u!61 &2107894599
 BoxCollider2D:

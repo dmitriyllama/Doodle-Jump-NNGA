@@ -41,8 +41,6 @@ public class SceneController : MonoBehaviour
 
     public float max_y_position = 0f;
     
-    
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -90,9 +88,9 @@ public class SceneController : MonoBehaviour
 
         var fitnesses = new List<double>(old_generation_fitness.Values);
 
-        _text_best_fittness.text = fitnesses.Max().ToString();
-        _text_ramaining_individuals.text = NNindividuals.Count.ToString();
-        _text_generation.text = generation.ToString();
+        _text_best_fittness.text = "Fitness " + fitnesses.Max();
+        _text_ramaining_individuals.text = "Individuals left " + NNindividuals.Count;
+        _text_generation.text = "Number of generation " + generation;
     }
 
     void chooseBestIndivid()
@@ -172,7 +170,7 @@ public class SceneController : MonoBehaviour
                     _new_height), Quaternion.identity); 
             }
             
-            _new_platform.gameObject.transform.localScale = new Vector3(Random.Range(1f, 10f),1, 1);
+            _new_platform.gameObject.transform.localScale = new Vector3(Random.Range(4f, 10f),1, 1);
             _priviest_highest_platform = _new_height;
 
             _priviest_lowest_platform = other.gameObject.transform.position.y;
@@ -218,7 +216,7 @@ public class SceneController : MonoBehaviour
             
             if (i == 0)
             {
-                _new_platform.gameObject.transform.localScale = new Vector3(20,1, 1);
+                _new_platform.gameObject.transform.localScale = new Vector3(15,1, 1);
             }
             else
             {
@@ -242,6 +240,7 @@ public class SceneController : MonoBehaviour
 
     public void Reset()
     {
+        
         Debug.Log("GENERATION " + generation);
         makeNewGeneration();
 
@@ -261,6 +260,7 @@ public class SceneController : MonoBehaviour
         
         for (int i = 0; i < _number_of_nn_individuals; i++)
         {
+            Debug.Log("Individual number: " + i);
             NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position + new Vector3(Random.Range(-3f,3f),0,0), _start_position.rotation));
             NNindividuals[i].name = i.ToString();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>();
@@ -304,15 +304,15 @@ public class SceneController : MonoBehaviour
             if (i > _number_of_nn_individuals / 2)
             {
                 int first_index = Random.Range(0, _number_of_nn_individuals);
-                            int second_index = first_index;
-                            while (second_index == first_index )
-                            {
-                                second_index = Random.Range(0, _number_of_nn_individuals);
-                            }
-                            new_generation_weights[old_generation_keys[i]] = 
-                                crossover(
-                                    old_generation_weights[old_generation_keys[first_index]],
-                                    old_generation_weights[old_generation_keys[second_index]]);
+                int second_index = first_index;
+                while (second_index == first_index )
+                { 
+                    second_index = Random.Range(0, _number_of_nn_individuals);
+                }
+                new_generation_weights[old_generation_keys[i]] = 
+                    crossover(
+                        old_generation_weights[old_generation_keys[first_index]], 
+                        old_generation_weights[old_generation_keys[second_index]]);
             }
         }
     
@@ -339,7 +339,7 @@ public class SceneController : MonoBehaviour
                 new_weights[i] = old_weights[i];
             }
         }
-
+        
         return new_weights;
     }
     

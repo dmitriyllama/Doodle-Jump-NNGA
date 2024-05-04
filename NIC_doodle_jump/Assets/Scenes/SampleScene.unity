@@ -1643,17 +1643,16 @@ MonoBehaviour:
   _extrabounce_platform: {fileID: 16783028999384575, guid: 242029ad06f2d92488da4045f62c7d0f, type: 3}
   _individual_prefab: {fileID: 4494578719903559137, guid: 587e46dd795b6164db4e7be15876aac2, type: 3}
   _start_position: {fileID: 1208791155}
-  _number_of_platforms: 5
-  _extrabounce_platform_chance: 0.2
-  _range_of_platform_spawn: 10
-  _number_of_nn_individuals: 100
-  max_stagnation_time: 10
   platforms:
   - {fileID: 657567255}
   - {fileID: 1023771185}
   - {fileID: 1861519181}
   - {fileID: 559128154}
   - {fileID: 676171944}
+  _number_of_platforms: 5
+  _extrabounce_platform_chance: 0.2
+  _range_of_platform_spawn: 10
+  _number_of_nn_individuals: 1000
   _mutation_genome_chance: 0.1
   _crossover_genome_chance: 0.5
   _mutation_individ_chance: 0.3

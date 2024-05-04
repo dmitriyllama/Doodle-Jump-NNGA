@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] [Range(1, 10)] private int _number_of_platforms;
     [SerializeField] [Range(0, 1)] private float _extrabounce_platform_chance;
     [SerializeField] [Range(0, float.MaxValue)] private float _range_of_platform_spawn;
-    [SerializeField] [Range(1, 1000)] private int _number_of_nn_individuals;
+    [SerializeField] [Range(1, 500)] private int _number_of_nn_individuals;
     private double previous_max_fittness = 0;
     
     private float _priviest_highest_platform = 9;

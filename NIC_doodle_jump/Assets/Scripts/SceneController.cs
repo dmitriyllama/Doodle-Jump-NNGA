@@ -322,7 +322,7 @@ public class SceneController : MonoBehaviour
         old_generation_fitness.OrderBy(x => x.Value);
         var old_generation_keys = new List<String>(old_generation_fitness.Keys);
         
-        using(StreamWriter sr = new StreamWriter("D:\\NIC_DOODLE_GITHUB\\Doodle-Jump-NNGA\\NIC_doodle_jump\\Assets\\NNmodels\\"+ generation + ".txt"))
+        using(StreamWriter sr = new StreamWriter(@"Assets\NNmodels\"+ generation + ".txt"))
         {
             foreach(var item in old_generation_weights[old_generation_keys[0]])
             {

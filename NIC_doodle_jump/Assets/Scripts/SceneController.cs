@@ -55,7 +55,7 @@ public class SceneController : MonoBehaviour
         //instantiating all individuals
         for (int i = 0; i < _number_of_nn_individuals; i++)
         {
-            NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position + new Vector3(Random.Range(-3f,3f),0,0), _start_position.rotation));
+            NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position, _start_position.rotation));
             NNindividuals[i].name = i.ToString();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>(); //link controller to the NN individual
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size); //initialize NN 
@@ -307,7 +307,7 @@ public class SceneController : MonoBehaviour
         for (int i = 0; i < _number_of_nn_individuals; i++)
         {
             Debug.Log("Individual number: " + i);
-            NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position + new Vector3(Random.Range(-3f,3f),0,0), _start_position.rotation));
+            NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position, _start_position.rotation));
             NNindividuals[i].name = i.ToString();
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>(); //link controller to the NN individual
             NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size); //initialize NN

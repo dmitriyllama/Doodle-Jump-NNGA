@@ -57,10 +57,10 @@ public class SceneController : MonoBehaviour
         {
             NNindividuals.Add(Instantiate(_individual_prefab, _start_position.position + new Vector3(Random.Range(-3f,3f),0,0), _start_position.rotation));
             NNindividuals[i].name = i.ToString();
-            NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>();
-            NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size);
+            NNindividuals[i].GetComponent<NeuralNetworkIndividual>().sceneController = gameObject.GetComponent<SceneController>(); //link controller to the NN individual
+            NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_layer_size(_NN_input_layer_size); //initialize NN 
             NNindividuals[i].GetComponent<SpriteRenderer>().color =
-                new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));//color individual
         }
 
         //instantiating dictionaries

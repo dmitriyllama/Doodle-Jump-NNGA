@@ -176,6 +176,11 @@ public class SceneController : MonoBehaviour
         NNindividuals[i].GetComponent<NeuralNetworkIndividual>().set_input_data(_input_data.ToArray());
     }
     
+    //normalization function
+    public double Sigmoid(double value) {
+        return 1.0f / (1.0f + (float) Math.Exp(-value));
+    }
+    
     //Method that called when object triggers eraser collider
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -330,11 +335,6 @@ public class SceneController : MonoBehaviour
         
         generation++;
     }
-    
-    //normalization function
-    public double Sigmoid(double value) {
-        return 1.0f / (1.0f + (float) Math.Exp(-value));
-    }
 
     //function that creates new generation weights
     void makeNewGeneration()
@@ -375,7 +375,7 @@ public class SceneController : MonoBehaviour
                         old_generation_weights[old_generation_keys[second_index]]);
             }
             //random part
-            else if (i < _number_of_nn_individuals / 2 + _number_of_nn_individuals / 4 + _number_of_nn_individuals / 8)
+            else 
             {
                 for (int j = 0; j < _weights_num; j++)
                 {

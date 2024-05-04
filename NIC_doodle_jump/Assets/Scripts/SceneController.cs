@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] [Range(1, 10)] private int _number_of_platforms;
     [SerializeField] [Range(0, 1)] private float _extrabounce_platform_chance;
     [SerializeField] [Range(0, float.MaxValue)] private float _range_of_platform_spawn;
-    [SerializeField] [Range(1, 100)] private int _number_of_nn_individuals;
+    [SerializeField] [Range(1, 1000)] private int _number_of_nn_individuals;
     private double previous_max_fittness = 0;
     
     private float _priviest_highest_platform = 9;
@@ -188,7 +188,7 @@ public class SceneController : MonoBehaviour
         if (other.CompareTag("Platform") || other.CompareTag("Bounce_platform"))
         {
             //generate new platform
-            float _new_height = _priviest_highest_platform + 2f + Random.Range(0f, 5.1f);
+            float _new_height = _priviest_highest_platform + 2f + Random.Range(0f, 5f);
             float _new_x = Random.Range(-_range_of_platform_spawn, _range_of_platform_spawn);
             GameObject _new_platform;
             if (Random.Range(0f, 1f) > _extrabounce_platform_chance)
@@ -264,7 +264,7 @@ public class SceneController : MonoBehaviour
             platforms.Add(_new_platform);
             
             //setting platform position
-            platform_position_y = platform_position_y + 2f + Random.Range(0f, 5.1f);
+            platform_position_y = platform_position_y + 2f + Random.Range(0f, 5f);
             platform_position_x = Random.Range(-_range_of_platform_spawn, _range_of_platform_spawn);
         }
     }

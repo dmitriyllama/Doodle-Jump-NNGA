@@ -11,16 +11,17 @@ using Random = UnityEngine.Random;
 
 public class SceneController : MonoBehaviour
 {
+    [Header("references")]
     [SerializeField] private GameObject _regular_platform;
     [SerializeField] private GameObject _extrabounce_platform;
     [SerializeField] private GameObject _individual_prefab;
     [SerializeField] private Transform _start_position;
+    [SerializeField] private List<GameObject> platforms = new List<GameObject>();
+    [Header("Hyper parameters")]
     [SerializeField] [Range(1, 10)] private int _number_of_platforms;
     [SerializeField] [Range(0, 1)] private float _extrabounce_platform_chance;
     [SerializeField] [Range(0, float.MaxValue)] private float _range_of_platform_spawn;
     [SerializeField] [Range(1, 100)] private int _number_of_nn_individuals;
-    [SerializeField] [Range(0, 100)] private float max_stagnation_time;
-    private float stagnation_time = 0;
     private double previous_max_fittness = 0;
     
     private float _priviest_highest_platform = 9;
@@ -28,8 +29,6 @@ public class SceneController : MonoBehaviour
     private int _NN_input_layer_size = 1;
     private List<GameObject> NNindividuals = new List<GameObject>();
     private GameObject best_individ;
-    [SerializeField] private List<GameObject> platforms = new List<GameObject>();
-    
     
     [SerializeField] [Range(0, 1)] private float _mutation_genome_chance;
     [SerializeField] [Range(0, 1)] private float _crossover_genome_chance;
@@ -40,6 +39,7 @@ public class SceneController : MonoBehaviour
     private Dictionary<String, double[]> new_generation_weights;
     private int _weights_num;
     
+    [Header("Presentation of info")]
     [SerializeField] private TMP_Text _text_best_fittness;
     [SerializeField] private TMP_Text _text_ramaining_individuals;
     [SerializeField] private TMP_Text _text_generation;
@@ -353,7 +353,7 @@ public class SceneController : MonoBehaviour
             {
                 for (int j = 0; j < _weights_num; j++)
                 {
-                    new_generation_weights[old_generation_keys[i]][j] = Random.Range(-1f, 1f);
+                    new_generation_weights[old_generation_keys[i]][j] = Random.Range(-10f, 10f);
                 }
             }
             if (Random.Range(0f, 1f) < _mutation_individ_chance)
@@ -370,7 +370,7 @@ public class SceneController : MonoBehaviour
         {
             if (Random.Range(0f, 1f) < _mutation_genome_chance)
             {
-                new_weights[i] = Random.Range(-1f, 1f);
+                new_weights[i] = Random.Range(-10f, 10f);
             }
             else
             {

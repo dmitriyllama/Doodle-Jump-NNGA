@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 // https://www.primaryobjects.com/2009/05/06/using-neural-networks-and-genetic-algorithms-in-c-net/
 
 
-// Base class for NNindividuals
+// Base class for NN individuals
 public class NeuralNetworkIndividual : MonoBehaviour
 {
     [SerializeField] public SceneController sceneController;
@@ -64,7 +64,7 @@ public class NeuralNetworkIndividual : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _time += Time.deltaTime;
+        _time += Time.deltaTime; //updates time on time between frames
         if (transform.position.y > _score)
         {
             _score = transform.position.y;
@@ -90,6 +90,7 @@ public class NeuralNetworkIndividual : MonoBehaviour
         SigmoidLayer hiddenLayer_1 = new SigmoidLayer(_hidden_layer_size_1);
         SigmoidLayer outputLayer = new SigmoidLayer(1);
         
+        // NN connection and initialization
         BackpropagationConnector connector1 = new BackpropagationConnector(inputLayer, hiddenLayer_1);
         BackpropagationConnector connector2 = new BackpropagationConnector(hiddenLayer_1, outputLayer);
         network = new BackpropagationNetwork(inputLayer, outputLayer);
@@ -101,12 +102,14 @@ public class NeuralNetworkIndividual : MonoBehaviour
         //initially random weights
         for (int i = 0; i < weights_num; i++)
         {
-            weights[i] = Random.Range(-1f, 1f);
+            weights[i] = Random.Range(-10f, 10f);
         }
         
+        //update weights(aka model)
         setNetworkWeights(weights);
     }
 
+    //method called from scene controller to pass info about environment
     public void set_input_data(double [] data)
     {
         if (data.Length == _input_layer_size)
@@ -125,15 +128,16 @@ public class NeuralNetworkIndividual : MonoBehaviour
         }
     }
 
+    //method that takes input of NN as command to move to Individual Movement script
     public void decide()
     {
         double[] output = network.Run(_input_data);
-        this.GetComponent<IndividualMovement>().Move(((float)output[0]-0.5f)*20);
+        GetComponent<IndividualMovement>().Move(((float)output[0]-0.5f)*2);
     }
     
+    //Set weights(aka model)
     public void setNetworkWeights(double[] new_weights)
     {
-        // Setup the network's weights.
         int index = 0;
         foreach (BackpropagationConnector connector in network.Connectors)
         {

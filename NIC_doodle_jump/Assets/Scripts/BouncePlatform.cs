@@ -6,7 +6,7 @@ using UnityEngine;
 public class BouncePlatform : MonoBehaviour
 {
     
-    [SerializeField] private float bounce_force = 600f;
+    [SerializeField] private float bounce_force = 600f; //controls height of bounce
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (Mathf.Abs(other.gameObject.GetComponent<Rigidbody2D>().velocity.y) <= 0.01)

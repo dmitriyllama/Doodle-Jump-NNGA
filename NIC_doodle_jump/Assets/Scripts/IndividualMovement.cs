@@ -12,7 +12,7 @@ public class IndividualMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
     }
-
+    
     public void Move(float moveInput)
     {
         _rb.velocity = new Vector2(speed * moveInput, _rb.velocity.y);

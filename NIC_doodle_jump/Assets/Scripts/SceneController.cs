@@ -62,12 +62,14 @@ public class SceneController : MonoBehaviour
             NNindividuals[i].GetComponent<SpriteRenderer>().color =
                 new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));//color individual
         }
+        
+        //get info about model size
+        _weights_num = NNindividuals[0].GetComponent<NeuralNetworkIndividual>().getWeightsNum();
 
         //instantiating dictionaries
         old_generation_weights = new Dictionary<string, double[]>();
         new_generation_weights = new Dictionary<string, double[]>();
         old_generation_fitness = new Dictionary<string, double>();
-        _weights_num = NNindividuals[0].GetComponent<NeuralNetworkIndividual>().getWeightsNum();
         foreach (var iNindividual in NNindividuals)
         {
             old_generation_weights.Add(iNindividual.name, iNindividual.GetComponent<NeuralNetworkIndividual>().getWeights());

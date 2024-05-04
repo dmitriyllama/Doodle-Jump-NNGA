@@ -40,11 +40,13 @@ public class NeuralNetworkIndividual : MonoBehaviour
         _time = 0;
     }
     
+    // fitness function
     public double fitnessFunction()
     {
-        double a = 1;
+        double a = 2;
         double b = 1;
-        double fitness = a*_score + b*_score/_time;
+        double c = 0.5; //time added after report to penalize inability of staying on platform
+        double fitness = a*_score + b*_score/_time + c*_time;
 
         return fitness;
     }

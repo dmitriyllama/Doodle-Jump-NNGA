@@ -107,7 +107,7 @@ public class SceneController : MonoBehaviour
         _text_generation.text = "Number of generation " + generation;
 
         stagnation_time += Time.deltaTime;
-        if (stagnation_time > max_stagnation_time)
+        if (Input.GetKeyDown(KeyCode.T))
         {
             foreach (var VARIABLE in NNindividuals)
             {
